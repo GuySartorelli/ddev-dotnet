@@ -34,7 +34,7 @@ public static class UserApi
 
     group.MapPut("/{id}", async (UserService userService, string id, User user) =>
       {
-        var existingUser = await userService.GetUserByEmailAsync(user.Email);
+        var existingUser = await userService.GetUserByIdAsync(id);
         if (existingUser is null)
         {
           return Results.NotFound();
@@ -48,13 +48,13 @@ public static class UserApi
 
     group.MapDelete("/{id}", async (UserService userService, string id) =>
       {
-        var user = await userService.GetUserByEmailAsync(id);
+        var user = await userService.GetUserByIdAsync(id);
         if (user is null)
         {
           return Results.NotFound();
         }
 
-        await userService.DeleteUserAsync(user.Email);
+        await userService.DeleteUserAsync(user.Id);
         return Results.NoContent();
       });
 
