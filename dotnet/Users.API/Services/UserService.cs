@@ -11,6 +11,9 @@ public class UserService(UserContext context)
   public async Task<User?> GetUserByEmailAsync(string email) =>
     await context.Users.Find(user => user.Email == email).FirstOrDefaultAsync();
 
+  public async Task<User?> GetUserByIdAsync(string id) =>
+    await context.Users.Find(user => user.Id == id).FirstOrDefaultAsync();
+
   public async Task<User> CreateUserAsync(User user)
   {
     await context.Users.InsertOneAsync(user);
