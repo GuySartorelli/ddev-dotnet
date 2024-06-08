@@ -1,0 +1,36 @@
+services:
+  dotnet-users:
+    container_name: ddev-${DDEV_SITENAME}-dotnet-users
+    build: dotnet/Users.API
+    environment:
+      VIRTUAL_HOST: $DDEV_HOSTNAME
+      HTTP_EXPOSE: 8080:8080
+      HTTPS_EXPOSE: 8080:8080
+    networks: [default, ddev_default]
+    restart: "no"
+    # These labels ensure this service is discoverable by ddev.
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+    volumes:
+    - ".:/mnt/ddev_config"
+    - "ddev-global-cache:/mnt/ddev-global-cache"
+
+  mongodb:
+    image: mongo:latest
+    container_name: ddev-${DDEV_SITENAME}-dotnet-mongo
+    environment:
+      VIRTUAL_HOST: $DDEV_HOSTNAME
+      HTTP_EXPOSE: 27017:27017
+      HTTPS_EXPOSE: 27017:27017
+    networks: [default, ddev_default]
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+    volumes:
+      - dotnet-mongo-data:/data/db
+      - ".:/mnt/ddev_config"
+      - "ddev-global-cache:/mnt/ddev-global-cache"
+
+volumes:
+  dotnet-mongo-data:
