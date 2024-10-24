@@ -4,14 +4,26 @@
 
 ## Getting started
 
-In the DDEV project directory launch the command:
+In the DDEV project directory:
+
+For DDEV v1.23.5 or above run
+
+```sh
+ddev add-on get machine-rc/ddev-dotnet
+```
+
+For earlier versions of DDEV run
+
 ```sh
 ddev get machine-rc/ddev-dotnet
 ```
+
 Restart the DDEV instance:
+
 ```sh
 ddev restart
 ```
+
 Access .NET application on defined port (or `8080` default) via the url: https://your-project-name.ddev.site:8080/
 
 ## Setup Instructions
